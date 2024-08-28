@@ -38,20 +38,19 @@ pipeline {
         }
     }
     post {
-        always {
+        success {
             echo 'Pipeline succeeded!'
-           
-               mail to: "s223743838@deakin.edu.au",
+            emailext attachLog: true,
+                to: "s223743838@deakin.edu.au",
                 subject: "Jenkins Pipeline Success: ${currentBuild.fullDisplayName}",
                 body: "The Jenkins pipeline ${currentBuild.fullDisplayName} was successful."
-               
         }
         failure {
             echo 'Pipeline failed!'
-            
-               mail to: "s223743838@deakin.edu.au",
+            emailext attachLog: true,
+                to: "s223743838@deakin.edu.au",
                 subject: "Jenkins Pipeline Failure: ${currentBuild.fullDisplayName}",
                 body: "The Jenkins pipeline ${currentBuild.fullDisplayName} failed. Please review the attached logs."
-             }
+        }
     }
 }
