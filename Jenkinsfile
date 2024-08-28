@@ -10,6 +10,22 @@ pipeline {
             steps {
                 echo 'Running unit and integration tests (Tools like TestNG, Selenium)..'
             }
+            post {
+        success {
+            echo 'Successfully Completed Unit and Integration Tests!'
+            emailext attachLog: true,
+                to: "s223743838@deakin.edu.au",
+                subject: "Unit and Integration Tests Success: ${currentBuild.fullDisplayName}",
+                body: "The Unit and Integration Tests ${currentBuild.fullDisplayName} was successful."
+        }
+        failure {
+            echo 'Faliure on execution of Unit and Integration Tests!'
+            emailext attachLog: true,
+                to: "s223743838@deakin.edu.au",
+                subject: "Unit and Integration Tests Failure: ${currentBuild.fullDisplayName}",
+                body: "The Unit and Integration Tests ${currentBuild.fullDisplayName} failed. Please review the attached logs."
+        }
+    }
         }
         stage('Code Analysis') {
             steps {
@@ -19,6 +35,22 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan(Tools: OWASP ZAP or Snyk)..'
+                post {
+        success {
+            echo 'Successfully security scan!'
+            emailext attachLog: true,
+                to: "s223743838@deakin.edu.au",
+                subject: "security scan Success: ${currentBuild.fullDisplayName}",
+                body: "The security scan ${currentBuild.fullDisplayName} was successful."
+        }
+        failure {
+            echo 'Faliure on execution of security scan!'
+            emailext attachLog: true,
+                to: "s223743838@deakin.edu.au",
+                subject: "security scan Failure: ${currentBuild.fullDisplayName}",
+                body: "The security scan ${currentBuild.fullDisplayName} failed. Please review the attached logs."
+        }
+    }
             }
         }
         stage('Deploy to Staging') {
