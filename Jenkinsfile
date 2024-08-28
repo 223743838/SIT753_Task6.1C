@@ -38,7 +38,7 @@ pipeline {
             }
                 post {
         success {
-            echo 'Successfully security scan!'
+            echo 'Successfully completed security scan!'
             emailext attachLog: true,
                 to: "s223743838@deakin.edu.au",
                 subject: "security scan Success: ${currentBuild.fullDisplayName}",
