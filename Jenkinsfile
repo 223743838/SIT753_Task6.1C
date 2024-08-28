@@ -35,6 +35,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan(Tools: OWASP ZAP or Snyk)..'
+            }
                 post {
         success {
             echo 'Successfully security scan!'
@@ -51,7 +52,7 @@ pipeline {
                 body: "The security scan ${currentBuild.fullDisplayName} failed. Please review the attached logs."
         }
     }
-            }
+
         }
         stage('Deploy to Staging') {
             steps {
